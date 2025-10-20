@@ -1,0 +1,26 @@
+name: Build and Save Static Site
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Prepare site folder
+      run: |
+        mkdir site
+        cp index.html style.css script.js site/
+
+    - name: Upload site artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: site
+        path: site/
